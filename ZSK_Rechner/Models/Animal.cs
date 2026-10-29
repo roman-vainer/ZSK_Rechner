@@ -9,5 +9,6 @@ namespace ZSK_Rechner.Models
         
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = name;
+
     }
 }

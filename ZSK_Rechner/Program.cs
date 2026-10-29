@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ZSK_Rechner.Models;
+
 namespace ZSK_Rechner
 {
     public class Program
@@ -8,6 +11,8 @@ namespace ZSK_Rechner
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ZSKDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ZSKDBCS")));
 
             var app = builder.Build();
 

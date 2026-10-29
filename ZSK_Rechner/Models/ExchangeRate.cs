@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZSK_Rechner.Models
 {
@@ -8,6 +9,7 @@ namespace ZSK_Rechner.Models
         public int AnimalId { get; set; }
         public Animal Animal { get; set; } = null!;
         [Range(0.01, 1000000, ErrorMessage = "Rate must be between 0.01 and 1000000")]
+        [Precision(18, 2)]
         public decimal Rate { get; set; }
         public DateTime ValidFrom { get; set; } = DateTime.UtcNow;
     }
