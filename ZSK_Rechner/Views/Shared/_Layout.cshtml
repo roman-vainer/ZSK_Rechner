@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="utf-8" />
@@ -22,13 +25,13 @@
             </a>
 
             <nav class="zsk-nav d-flex align-items-center" aria-label="Hauptnavigation">
-                <a class="nav-item active" asp-controller="Home" asp-action="Index">Startseite</a>
-                <a class="nav-item" asp-controller="Home" asp-action="Index" asp-fragment="rechner">Rechner</a>
-                <a class="nav-item" asp-controller="Home" asp-action="Index" asp-fragment="wechselkurse">Wechselkurse</a>
-                <a class="nav-item" asp-controller="Home" asp-action="Index" asp-fragment="tierverwaltung">Tierverwaltung</a>
+                <a class="nav-item @(currentController == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">Startseite</a>
+                <a class="nav-item @(currentController == "Calculate" ? "active" : "")" asp-controller="Calculate" asp-action="Index" asp-fragment="rechner">Rechner</a>
+                <a class="nav-item @(currentController == "ExchangeRate" ? "active" : "")" asp-controller="ExchangeRate" asp-action="Index" asp-fragment="wechselkurse">Wechselkurse</a>
+                <a class="nav-item @(currentController == "Animal" ? "active" : "")" asp-controller="Animal" asp-action="Index" asp-fragment="tierverwaltung">Tierverwaltung</a>
             </nav>
 
-            <a class="header-cta d-inline-flex align-items-center" asp-controller="Home" asp-action="Index" asp-fragment="rechner">
+            <a class="header-cta d-inline-flex align-items-center" asp-controller="Calculate" asp-action="Index" asp-fragment="rechner">
                 Rechner öffnen
                 <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg>
             </a>

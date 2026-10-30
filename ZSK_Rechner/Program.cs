@@ -34,7 +34,7 @@ namespace ZSK_Rechner
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
-
+            EnsureDatabase.Migrate(app);
             app.Run();
         }
     }

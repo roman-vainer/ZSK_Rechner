@@ -467,6 +467,7 @@ a {
     overflow: hidden;
     border-radius: 1.7rem;
     padding: 1.25rem 1.4rem;
+    transition: transform 0.3s ease;
 }
 
     .feature-card::after {
@@ -537,8 +538,19 @@ a {
     margin: 0.5rem 0 0;
     font-size: 0.875rem;
     line-height: 1.5;
-    opacity: 0.75;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+    .feature-card:hover p {
+        opacity: 0.75;
+        transform: translateY(0);
+    }
 
 .zsk-footer {
     padding-block: clamp(0.7rem, 1.55vh, 0.875rem);

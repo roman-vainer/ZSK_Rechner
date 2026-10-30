@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ZSK_Rechner.ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Startseite";
 }
 
@@ -22,11 +23,11 @@
             </p>
 
             <div class="hero-actions d-flex flex-wrap">
-                <a class="zsk-button button-primary" asp-controller="Home" asp-action="Index" asp-fragment="rechner">
+                <a class="zsk-button button-primary" asp-controller="Calculate" asp-action="Index" asp-fragment="rechner">
                     Zum Rechner
                     <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" /></svg>
                 </a>
-                <a class="zsk-button button-secondary" asp-controller="Home" asp-action="Index" asp-fragment="tierverwaltung">
+                <a class="zsk-button button-secondary" asp-controller="Animal" asp-action="Index" asp-fragment="tierverwaltung">
                     Zur Tierverwaltung
                 </a>
             </div>
@@ -53,7 +54,8 @@
                 <span class="rate-label">Beispielkurs</span>
                 <div class="rate-value d-flex align-items-end">
                     <strong>1 Kuh</strong>
-                    <span>= 2.800 €</span>
+                    
+                    <span>= @Model.CowRate €</span>
                 </div>
             </div>
 

@@ -1,0 +1,19 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using ZSK_Rechner.Models;
+namespace ZSK_Rechner.Controllers
+{
+    public class ExchangeRateController : Controller
+    {
+        private ZSKDBContext _context;
+
+        public ExchangeRateController(ZSKDBContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
+}
