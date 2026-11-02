@@ -1,1 +1,161 @@
-﻿<h1>Tierverwaltung</h1>
+﻿@{
+    ViewData["Title"] = "Tierverwaltung";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/animal.css" asp-append-version="true" />
+}
+
+<section class="animal-page">
+    <div class="zsk-container">
+        <header class="animal-page-heading d-flex align-items-end justify-content-between">
+            <div>
+                <p class="section-kicker">Bestand &amp; Kurse</p>
+                <h1>Tierverwaltung</h1>
+                <p class="page-subtitle">Tierarten und aktuelle Wechselkurse verwalten.</p>
+            </div>
+            <button class="zsk-button button-primary" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="create">
+                <span aria-hidden="true">+</span>
+                Neues Tier hinzufügen
+            </button>
+        </header>
+
+        <section class="animal-table-card" aria-labelledby="animal-table-title">
+            <div class="animal-table-heading d-flex align-items-center justify-content-between">
+                <div>
+                    <h2 id="animal-table-title">Tierarten</h2>
+                    <p>Alle hinterlegten Tiere und ihre aktuellen Euro-Werte.</p>
+                </div>
+                <span class="animal-count">4 Einträge</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table animal-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tierart</th>
+                            <th scope="col">Aktueller Kurs (€)</th>
+                            <th scope="col" class="text-end">Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="animal-avatar avatar-terracotta">K</span><strong>Kuh</strong></td>
+                            <td class="animal-rate">2.800,00 €</td>
+                            <td>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Kuh" data-rate="2800.00">Bearbeiten</button>
+                                    <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kuh">Löschen</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="animal-avatar avatar-beige">S</span><strong>Schaf</strong></td>
+                            <td class="animal-rate">650,00 €</td>
+                            <td>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Schaf" data-rate="650.00">Bearbeiten</button>
+                                    <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Schaf">Löschen</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="animal-avatar avatar-teal">Z</span><strong>Ziege</strong></td>
+                            <td class="animal-rate">500,00 €</td>
+                            <td>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Ziege" data-rate="500.00">Bearbeiten</button>
+                                    <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Ziege">Löschen</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="animal-avatar avatar-terracotta">K</span><strong>Kleine Ziege</strong></td>
+                            <td class="animal-rate">50,00 €</td>
+                            <td>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Kleine Ziege" data-rate="50.00">Bearbeiten</button>
+                                    <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kleine Ziege">Löschen</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</section>
+
+<div class="modal fade" id="animalFormModal" tabindex="-1" aria-labelledby="animalFormModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content animal-modal">
+            <div class="modal-header">
+                <div>
+                    <p class="section-kicker modal-kicker">Neue Tierart</p>
+                    <h2 class="modal-title" id="animalFormModalTitle">Neues Tier hinzufügen</h2>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Dialog schließen"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="animalName">Tiername</label>
+                        <input class="form-control" id="animalName" name="Name" type="text" placeholder="z. B. Alpaka" required />
+                    </div>
+                    <div>
+                        <label class="form-label" for="exchangeRate">Wechselkurs (€)</label>
+                        <input class="form-control" id="exchangeRate" name="ExchangeRate" type="number" min="0.01" step="0.01" placeholder="0,00" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="zsk-button button-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="zsk-button button-primary" id="animalSubmitButton">Speichern</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAnimalModal" tabindex="-1" aria-labelledby="deleteAnimalModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content animal-modal delete-modal">
+            <div class="modal-body text-center">
+                <h2 class="modal-title" id="deleteAnimalModalTitle">Tier löschen</h2>
+                <p>Möchten Sie dieses Tier wirklich löschen?</p>
+                <strong id="deleteAnimalName"></strong>
+            </div>
+            <form method="post">
+                <input id="deleteAnimalInput" name="Name" type="hidden" />
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="zsk-button button-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="zsk-button delete-confirm">Löschen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const formModal = document.getElementById("animalFormModal");
+            const deleteModal = document.getElementById("deleteAnimalModal");
+
+            formModal.addEventListener("show.bs.modal", event => {
+                const trigger = event.relatedTarget;
+                const isEdit = trigger.dataset.mode === "edit";
+                formModal.querySelector(".modal-kicker").textContent = isEdit ? "Tierart aktualisieren" : "Neue Tierart";
+                formModal.querySelector(".modal-title").textContent = isEdit ? "Tier bearbeiten" : "Neues Tier hinzufügen";
+                formModal.querySelector("#animalSubmitButton").textContent = isEdit ? "Änderungen speichern" : "Speichern";
+                formModal.querySelector("#animalName").value = isEdit ? trigger.dataset.name : "";
+                formModal.querySelector("#exchangeRate").value = isEdit ? trigger.dataset.rate : "";
+            });
+
+            deleteModal.addEventListener("show.bs.modal", event => {
+                const name = event.relatedTarget.dataset.name;
+                deleteModal.querySelector("#deleteAnimalName").textContent = name;
+                deleteModal.querySelector("#deleteAnimalInput").value = name;
+            });
+        })();
+    </script>
+}
