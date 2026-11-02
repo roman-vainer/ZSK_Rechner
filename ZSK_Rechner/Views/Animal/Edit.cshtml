@@ -1,0 +1,34 @@
+﻿@model ZSK_Rechner.ViewModels.AnimalViewModel
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/animal.css" asp-append-version="true" />
+}
+
+<section class="animal-page">
+	<div class="animal-modal mx-auto" style="max-width: 500px;">
+		<div class="modal-header">
+			<div>
+				<p class="section-kicker modal-kicker">Neue Tierart</p>
+				<h2 class="modal-title">Neues Tier hinzufügen</h2>
+			</div>
+		</div>
+		<form asp-controller="Animal" asp-action="Create" method="post">
+			<div class="modal-body">
+				<div class="mb-3">
+					<label asp-for="Name" class="form-label">Tiername</label>
+					<input asp-for="Name" class="form-control" placeholder="@Model.Name" required />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div>
+					<label asp-for="Rate" class="form-label">Wechselkurs (€)</label>
+					<input asp-for="Rate" class="form-control" placeholder="@Model.Rate" required />
+					<span asp-validation-for="Rate" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a class="zsk-button button-secondary" asp-controller="Animal" asp-action="Index">Abbrechen</a>
+				<button type="submit" class="zsk-button button-primary">Speichern</button>
+			</div>
+		</form>
+	</div>
+</section>

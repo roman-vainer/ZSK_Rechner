@@ -1,4 +1,4 @@
-﻿@model List<ZSK_Rechner.ViewModels.AnimalCreateViewModel>
+﻿@model List<ZSK_Rechner.ViewModels.AnimalViewModel>
 @{
 	ViewData["Title"] = "Tierverwaltung";
 }
@@ -41,7 +41,7 @@
 					<tbody>
 
 						@{
-							string[] colors = { "avatar-terracotta", "avatar-beige", "avatar-teal", "avatar-terracotta" };
+							string[] colors = { "avatar-terracotta", "avatar-beige", "avatar-teal" };
 							int index = 0;
 						}
 
@@ -53,8 +53,17 @@
 									<span class="animal-avatar @avatarClass">@animal.Name[0]</span><strong>@animal.Name</strong>
 								</td>
 								<td class="animal-rate">@animal.Rate</td>
+
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Kuh" data-rate="2800.00">Bearbeiten</button>
+                                        <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kuh">Löschen</button>
+                                    </div>
+                                </td>
+
 							</tr>
-						}
+                            index++;
+                        }
 					</tbody>
 				</table>
 			</div>
