@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ZSK_Rechner.Models;
 using ZSK_Rechner.ViewModels;
 namespace ZSK_Rechner.Controllers
@@ -14,8 +15,18 @@ namespace ZSK_Rechner.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var animals = _context.ExchangeRates
+                .GroupBy(e => e.AnimalId)
+                .Select(g => g.OrderByDescending(d => d.ValidFrom).First())
+                .Select(e => new AnimalCreateViewModel
+                {
+                    Name = e.Animal.Name,
+                    Rate = e.Rate
+                }).ToList();
+            return View(animals);
         }
+
+
 
         [HttpGet]
         public IActionResult Create()
