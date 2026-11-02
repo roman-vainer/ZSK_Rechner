@@ -14,12 +14,11 @@
                 <h1>Tierverwaltung</h1>
                 <p class="page-subtitle">Tierarten und aktuelle Wechselkurse verwalten.</p>
             </div>
-            <button class="zsk-button button-primary" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="create">
+            <a class="zsk-button button-primary" asp-controller="Animal" asp-action="Create">
                 <span aria-hidden="true">+</span>
                 Neues Tier hinzufügen
-            </button>
+            </a>
         </header>
-
         <section class="animal-table-card" aria-labelledby="animal-table-title">
             <div class="animal-table-heading d-flex align-items-center justify-content-between">
                 <div>
@@ -88,7 +87,7 @@
 
 
 
-<div class="modal fade" id="animalFormModal" tabindex="-1" aria-labelledby="animalFormModalTitle" aria-hidden="true">
+@* <div class="modal fade" id="animalFormModal" tabindex="-1" aria-labelledby="animalFormModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content animal-modal">
             <div class="modal-header">
@@ -161,3 +160,4 @@
         })();
     </script>
 }
+ *@
