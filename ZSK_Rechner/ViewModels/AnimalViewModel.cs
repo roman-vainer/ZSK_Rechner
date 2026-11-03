@@ -5,6 +5,7 @@ namespace ZSK_Rechner.ViewModels
 {
     public class AnimalViewModel
     {
+        public int AnimalId { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 

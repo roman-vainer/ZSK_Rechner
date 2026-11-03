@@ -26,7 +26,7 @@ namespace ZSK_Rechner.Controllers
                     .Select(e => e.Rate)
                     .FirstOrDefault()
                 }).ToList();
-         
+
             return View(animals);
         }
 
@@ -62,16 +62,23 @@ namespace ZSK_Rechner.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-
-            var animal = _context.ExchangeRates
-                .Where(e => e.Id == id)
-                .Select(e => new AnimalViewModel
-                {
-                    Name = e.Animal.Name,
-                    Rate = e.Rate
-                }).FirstOrDefault();
-
-            return View(animal);
+            var animal = _context.Animals.Find(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            var model = new AnimalViewModel
+            {
+                AnimalId = animal.Id,
+                Name = animal.Name,
+                Rate = _context.ExchangeRates
+                .Where(e => e.AnimalId == animal.Id)
+                .OrderByDescending(e => e.ValidFrom)
+                .ThenByDescending(e => e.Id)
+                .Select(e => e.Rate)
+                .FirstOrDefault()
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -81,12 +88,19 @@ namespace ZSK_Rechner.Controllers
             {
                 return View(model);
             }
-
-            var animal = _context.Animals.Find(model.)
+            var animal = _context.Animals.Find(model.AnimalId);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            if (model.Name != animal.Name)
+            {
+                animal.Name = model.Name;
+            }
 
             _context.ExchangeRates.Add(new ExchangeRate
             {
-                Animal = _context.Animals.FirstOrDefault(a => a.Name == model.Name)!,
+                AnimalId = model.AnimalId,
                 Rate = model.Rate,
                 ValidFrom = DateTime.UtcNow
             });

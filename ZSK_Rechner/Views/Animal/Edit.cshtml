@@ -13,6 +13,7 @@
 			</div>
 		</div>
 		<form asp-controller="Animal" asp-action="Create" method="post">
+			<input type="hidden" asp-for="AnimalId" />
 			<div class="modal-body">
 				<div class="mb-3">
 					<label asp-for="Name" class="form-label">Tiername</label>

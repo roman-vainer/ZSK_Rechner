@@ -54,16 +54,16 @@
 								</td>
 								<td class="animal-rate">@animal.Rate</td>
 
-                                <td>
-                                    <div class="d-flex justify-content-end gap-2">
-                                        <button class="btn animal-action edit-action" type="button" data-bs-toggle="modal" data-bs-target="#animalFormModal" data-mode="edit" data-name="Kuh" data-rate="2800.00">Bearbeiten</button>
-                                        <button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kuh">Löschen</button>
-                                    </div>
-                                </td>
+								<td>
+									<div class="d-flex justify-content-end gap-2">
+										<a class="btn animal-action edit-action" asp-controller="Animal" asp-action="Edit" asp-route-id=@animal.AnimalId>Bearbeiten</a>
+										<button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kuh">Löschen</button>
+									</div>
+								</td>
 
 							</tr>
-                            index++;
-                        }
+							index++;
+						}
 					</tbody>
 				</table>
 			</div>
