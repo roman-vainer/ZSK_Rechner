@@ -28,7 +28,7 @@
 						</div>
 					</div>
 
-					<form asp-controller="Calculate" asp-action="Index" method="post" class="calculate-form">
+					<form asp-controller="Calculate" asp-action="Calculate" method="post" class="calculate-form">
 						<div class="mb-3">
 							<label class="form-label" asp-for="Direction">Umrechnungsrichtung</label>
 							<select class="form-select" asp-for="Direction">
@@ -79,14 +79,15 @@
 
 						@if (Model.Result.HasValue)
 						{
+							string ticker = Model.Direction == ZSK_Rechner.Enums.ConvertionDirection.AnimalToEuro ? " €" : $" {Model.AnimalName}";
 							<dl class="result-values">
 								<div>
 									<dt>Berechnetes Ergebnis</dt>
-									<dd>@Model.Result</dd>
+									<dd>@Model.Result.Value.ToString("F2")@ticker</dd>
 								</div>
 								<div>
 									<dt>Angewandter Wechselkurs</dt>
-									<dd>@Model.AppliedRate</dd>
+									<dd>@Model.AppliedRate €</dd>
 								</div>
 							</dl>
 						}

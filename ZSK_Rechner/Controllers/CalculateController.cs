@@ -29,14 +29,19 @@ public class CalculateController : Controller
     [HttpPost]
     public IActionResult Calculate(CalculateViewModel model)
     {
+        var animals = _context.Animals.ToList();
+        model.Animals = animals;
+        model.AnimalName = animals.FirstOrDefault(a => a.Id == model.AnimalId)?.Name;
         var rate = _context.ExchangeRates
             .Where(e => e.AnimalId == model.AnimalId)
             .OrderByDescending(e => e.ValidFrom)
-            .ThenBy(e => e.Id)
+            .ThenByDescending(e => e.Id)
             .Select(e => e.Rate)
             .FirstOrDefault();
+        model.AppliedRate = rate;
+
 
         model.Result = service.Convert(model.Value ?? 0, rate, model.Direction);
-        return View(model);
+        return View("Index", model);
     }
 }
