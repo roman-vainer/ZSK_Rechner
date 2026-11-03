@@ -18,6 +18,7 @@ namespace ZSK_Rechner.Controllers
             var animals = _context.Animals
                 .Select(a => new AnimalViewModel
                 {
+                    AnimalId = a.Id,
                     Name = a.Name,
                     Rate = _context.ExchangeRates
                     .Where(e => e.AnimalId == a.Id)
@@ -104,6 +105,19 @@ namespace ZSK_Rechner.Controllers
                 Rate = model.Rate,
                 ValidFrom = DateTime.UtcNow
             });
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var animal = _context.Animals.Find(id);
+            if (animal == null)
+            {
+                return NotFound();
+            }
+            _context.Animals.Remove(animal);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

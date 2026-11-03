@@ -234,4 +234,22 @@
     .animal-table tbody td {
         padding-inline: 1.1rem;
     }
+
+    .delete-confirmation[open]::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+    }
+
+    .delete-confirmation[open] .animal-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1051;
+        width: 400px;
+        max-width: 90vw;
+    }
 }

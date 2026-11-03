@@ -57,10 +57,12 @@
 								<td>
 									<div class="d-flex justify-content-end gap-2">
 										<a class="btn animal-action edit-action" asp-controller="Animal" asp-action="Edit" asp-route-id=@animal.AnimalId>Bearbeiten</a>
-										<button class="btn animal-action delete-action" type="button" data-bs-toggle="modal" data-bs-target="#deleteAnimalModal" data-name="Kuh">Löschen</button>
+										<form asp-controller="Animal" asp-action="Delete" asp-route-id=@animal.AnimalId method="post"
+											  onsubmit="return confirm('Möchten Sie dieses Tier wirklich löschen?');">
+											<button type="submit" class="btn animal-action delete-action">Löschen</button>
+										</form>
 									</div>
 								</td>
-
 							</tr>
 							index++;
 						}
@@ -70,80 +72,3 @@
 		</section>
 	</div>
 </section>
-
-
-
-@* <div class="modal fade" id="animalFormModal" tabindex="-1" aria-labelledby="animalFormModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content animal-modal">
-            <div class="modal-header">
-                <div>
-                    <p class="section-kicker modal-kicker">Neue Tierart</p>
-                    <h2 class="modal-title" id="animalFormModalTitle">Neues Tier hinzufügen</h2>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Dialog schließen"></button>
-            </div>
-            <form method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label" for="animalName">Tiername</label>
-                        <input class="form-control" id="animalName" name="Name" type="text" placeholder="z. B. Alpaka" required />
-                    </div>
-                    <div>
-                        <label class="form-label" for="exchangeRate">Wechselkurs (€)</label>
-                        <input class="form-control" id="exchangeRate" name="ExchangeRate" type="number" min="0.01" step="0.01" placeholder="0,00" required />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="zsk-button button-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                    <button type="submit" class="zsk-button button-primary" id="animalSubmitButton">Speichern</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deleteAnimalModal" tabindex="-1" aria-labelledby="deleteAnimalModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content animal-modal delete-modal">
-            <div class="modal-body text-center">
-                <h2 class="modal-title" id="deleteAnimalModalTitle">Tier löschen</h2>
-                <p>Möchten Sie dieses Tier wirklich löschen?</p>
-                <strong id="deleteAnimalName"></strong>
-            </div>
-            <form method="post">
-                <input id="deleteAnimalInput" name="Name" type="hidden" />
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="zsk-button button-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                    <button type="submit" class="zsk-button delete-confirm">Löschen</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        (() => {
-            const formModal = document.getElementById("animalFormModal");
-            const deleteModal = document.getElementById("deleteAnimalModal");
-
-            formModal.addEventListener("show.bs.modal", event => {
-                const trigger = event.relatedTarget;
-                const isEdit = trigger.dataset.mode === "edit";
-                formModal.querySelector(".modal-kicker").textContent = isEdit ? "Tierart aktualisieren" : "Neue Tierart";
-                formModal.querySelector(".modal-title").textContent = isEdit ? "Tier bearbeiten" : "Neues Tier hinzufügen";
-                formModal.querySelector("#animalSubmitButton").textContent = isEdit ? "Änderungen speichern" : "Speichern";
-                formModal.querySelector("#animalName").value = isEdit ? trigger.dataset.name : "";
-                formModal.querySelector("#exchangeRate").value = isEdit ? trigger.dataset.rate : "";
-            });
-
-            deleteModal.addEventListener("show.bs.modal", event => {
-                const name = event.relatedTarget.dataset.name;
-                deleteModal.querySelector("#deleteAnimalName").textContent = name;
-                deleteModal.querySelector("#deleteAnimalInput").value = name;
-            });
-        })();
-    </script>
-}
- *@
