@@ -1,19 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 using ZSK_Rechner.Models;
-namespace ZSK_Rechner.Controllers
+using ZSK_Rechner.Services;
+using ZSK_Rechner.ViewModels;
+namespace ZSK_Rechner.Controllers;
+
+public class CalculateController : Controller
 {
-    public class CalculateController : Controller
+    private ZSKDBContext _context;
+    private CalculateService service = new CalculateService();
+
+    public CalculateController(ZSKDBContext context)
     {
-        private ZSKDBContext _context;
+        _context = context;
+    }
 
-        public CalculateController(ZSKDBContext context)
+    [HttpGet]
+    public IActionResult Index()
+    {
+        CalculateViewModel model = new CalculateViewModel
         {
-            _context = context;
-        }
+            Animals = _context.Animals.ToList()
+        };
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult Calculate(CalculateViewModel model)
+    {
+        var rate = _context.ExchangeRates
+            .Where(e => e.AnimalId == model.AnimalId)
+            .OrderByDescending(e => e.ValidFrom)
+            .ThenBy(e => e.Id)
+            .Select(e => e.Rate)
+            .FirstOrDefault();
+
+        model.Result = service.Convert(model.Value ?? 0, rate, model.Direction);
+        return View(model);
     }
 }
