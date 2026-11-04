@@ -15,9 +15,9 @@
 		<form asp-controller="Animal" asp-action="Create" method="post">
 			<div class="modal-body">
 				<div class="mb-3">
-					<label asp-for="Name" class="form-label">Tiername</label>
-					<input asp-for="Name" class="form-control" placeholder="z. B. Alpaka" required />
-					<span asp-validation-for="Name" class="text-danger"></span>
+					<label asp-for="AnimalName" class="form-label">Tiername</label>
+					<input asp-for="AnimalName" class="form-control" placeholder="z. B. Alpaka" required />
+					<span asp-validation-for="AnimalName" class="text-danger"></span>
 				</div>
 				<div>
 					<label asp-for="Rate" class="form-label">Wechselkurs (€)</label>

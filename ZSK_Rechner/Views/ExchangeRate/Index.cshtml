@@ -1,1 +1,159 @@
-﻿<h1>ExchangeRate</h1>
+﻿@model List<ZSK_Rechner.ViewModels.RateViewModel>
+@{
+	ViewData["Title"] = "Wechselkurse";
+}
+
+@section Styles {
+	<link rel="stylesheet" href="~/css/animal.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/exchangerate.css" asp-append-version="true" />
+}
+<main class="animal-page exchange-page">
+	<div class="zsk-container">
+		<header class="animal-page-heading">
+			<div>
+				<p class="section-kicker">Markt &amp; Entwicklung</p>
+				<h1>Wechselkurse</h1>
+				<p class="page-subtitle">Aktuelle Tierwerte und ihre Kursentwicklung im Überblick.</p>
+			</div>
+		</header>
+
+		<section class="exchange-section" aria-labelledby="current-rates-title">
+			<div class="exchange-section-heading">
+				<h2 id="current-rates-title">Aktuelle Wechselkurse</h2>
+				<p>Die aktuellen Euro-Werte unserer Tierarten auf einen Blick.</p>
+			</div>
+
+			<div class="exchange-grid">
+
+
+				@foreach (var animalRate in Model)
+				{
+					string changeCssClass = animalRate.RateHistory.FirstOrDefault()?.ChangeRate >= 0 ? "exchange-change-positive" : "exchange-change-negative";
+					string changeSymbol = animalRate.RateHistory.FirstOrDefault()?.ChangeRate >= 0 ? "↗" : "↘";
+
+					<article class="exchange-card">
+						<div class="exchange-card-top">
+							<div>
+								<h3>@animalRate.AnimalName</h3>
+								<span class="exchange-code">@animalRate.AnimalName.Substring(0, 3).ToUpper()</span>
+							</div>
+							<span class="exchange-change @changeCssClass">
+								<span aria-hidden="true">@changeSymbol</span>
+								@animalRate.RateHistory.FirstOrDefault()?.ChangeRate %
+							</span>
+						</div>
+						<p class="exchange-card-rate">@animalRate.RateHistory.FirstOrDefault()?.Rate €</p>
+						<p class="exchange-updated">Aktualisiert am <time datetime="2026-11-04">@animalRate.RateHistory.FirstOrDefault()?.ValidFrom</time></p>
+					</article>
+				}
+
+
+				
+
+			
+
+
+				@*
+				<article class="exchange-card">
+					<div class="exchange-card-top">
+						<div>
+							<h3>Kuh</h3>
+							<span class="exchange-code">KUH</span>
+						</div>
+						<span class="exchange-change exchange-change-positive">
+							<span aria-hidden="true">↗</span>
+							+5,66 %
+						</span>
+					</div>
+					<p class="exchange-card-rate">2.800,00 €</p>
+					<p class="exchange-updated">Aktualisiert am <time datetime="2026-11-04">04.11.2026</time></p>
+				</article>
+
+				<article class="exchange-card">
+					<div class="exchange-card-top">
+						<div>
+							<h3>Schaf</h3>
+							<span class="exchange-code">SCH</span>
+						</div>
+						<span class="exchange-change exchange-change-negative">
+							<span aria-hidden="true">↘</span>
+							−2,78 %
+						</span>
+					</div>
+					<p class="exchange-card-rate">350,00 €</p>
+					<p class="exchange-updated">Aktualisiert am <time datetime="2026-11-02">02.11.2026</time></p>
+				</article>
+
+				<article class="exchange-card">
+					<div class="exchange-card-top">
+						<div>
+							<h3>Ziege</h3>
+							<span class="exchange-code">ZIE</span>
+						</div>
+						<span class="exchange-change exchange-change-positive">
+							<span aria-hidden="true">↗</span>
+							+2,86 %
+						</span>
+					</div>
+					<p class="exchange-card-rate">180,00 €</p>
+					<p class="exchange-updated">Aktualisiert am <time datetime="2026-10-30">30.10.2026</time></p>
+				</article>
+				*@
+
+			</div>
+		</section>
+
+		<section class="animal-table-card exchange-history" aria-labelledby="rate-history-title">
+			<div class="animal-table-heading">
+				<div>
+					<h2 id="rate-history-title">Kurshistorie</h2>
+					<p>Alle bisherigen Kursänderungen chronologisch dokumentiert.</p>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table animal-table align-middle mb-0">
+					<thead>
+						<tr>
+							<th scope="col">Datum</th>
+							<th scope="col">Tierart</th>
+							<th scope="col" class="text-end">Alter Kurs</th>
+							<th scope="col" class="text-end">Neuer Kurs</th>
+							<th scope="col" class="text-end">Änderung</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><time datetime="2026-11-04">04.11.2026</time></td>
+							<td><strong>Kuh</strong></td>
+							<td class="text-end">2.650,00 €</td>
+							<td class="text-end">2.800,00 €</td>
+							<td class="text-end"><span class="exchange-change-text exchange-change-positive">+5,66 %</span></td>
+						</tr>
+						<tr>
+							<td><time datetime="2026-11-02">02.11.2026</time></td>
+							<td><strong>Schaf</strong></td>
+							<td class="text-end">360,00 €</td>
+							<td class="text-end">350,00 €</td>
+							<td class="text-end"><span class="exchange-change-text exchange-change-negative">−2,78 %</span></td>
+						</tr>
+						<tr>
+							<td><time datetime="2026-10-30">30.10.2026</time></td>
+							<td><strong>Ziege</strong></td>
+							<td class="text-end">175,00 €</td>
+							<td class="text-end">180,00 €</td>
+							<td class="text-end"><span class="exchange-change-text exchange-change-positive">+2,86 %</span></td>
+						</tr>
+						<tr>
+							<td><time datetime="2026-10-28">28.10.2026</time></td>
+							<td><strong>Kuh</strong></td>
+							<td class="text-end">—</td>
+							<td class="text-end">2.650,00 €</td>
+							<td class="text-end"><span class="exchange-change-text exchange-change-neutral">—</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</main>

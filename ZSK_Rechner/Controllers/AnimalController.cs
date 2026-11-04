@@ -19,7 +19,7 @@ namespace ZSK_Rechner.Controllers
                 .Select(a => new AnimalViewModel
                 {
                     AnimalId = a.Id,
-                    Name = a.Name,
+                    AnimalName = a.Name,
                     Rate = _context.ExchangeRates
                     .Where(e => e.AnimalId == a.Id)
                     .OrderByDescending(e => e.ValidFrom)
@@ -46,11 +46,11 @@ namespace ZSK_Rechner.Controllers
                 return View(model);
             }
 
-            Animal animal = new(model.Name);
+            Animal animal = new(model.AnimalName);
             ExchangeRate exchangeRate = new()
             {
                 Animal = animal,
-                Rate = model.Rate,
+                Rate = model.Rate!.Value,
                 ValidFrom = DateTime.UtcNow
             };
 
@@ -71,7 +71,7 @@ namespace ZSK_Rechner.Controllers
             var model = new AnimalViewModel
             {
                 AnimalId = animal.Id,
-                Name = animal.Name,
+                AnimalName = animal.Name,
                 Rate = _context.ExchangeRates
                 .Where(e => e.AnimalId == animal.Id)
                 .OrderByDescending(e => e.ValidFrom)
@@ -94,17 +94,20 @@ namespace ZSK_Rechner.Controllers
             {
                 return NotFound();
             }
-            if (model.Name != animal.Name)
+            if (model.AnimalName != animal.Name)
             {
-                animal.Name = model.Name;
+                animal.Name = model.AnimalName;
             }
 
-            _context.ExchangeRates.Add(new ExchangeRate
+            if (model.Rate != null)
             {
-                AnimalId = model.AnimalId,
-                Rate = model.Rate,
-                ValidFrom = DateTime.UtcNow
-            });
+                _context.ExchangeRates.Add(new ExchangeRate
+                {
+                    AnimalId = model.AnimalId,
+                    Rate = model.Rate.Value,
+                    ValidFrom = DateTime.UtcNow
+                });
+            }
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

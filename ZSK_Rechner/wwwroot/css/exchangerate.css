@@ -1,0 +1,131 @@
+﻿.exchange-page {
+    padding-block: clamp(1.75rem, 3.8vh, 2.5rem);
+}
+
+.exchange-section {
+    margin-top: clamp(1.25rem, 2.6vh, 1.75rem);
+}
+
+.exchange-section-heading h2 {
+    margin: 0;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.exchange-section-heading p {
+    margin: 0.35rem 0 0;
+    color: #786459;
+    font-size: 0.8rem;
+}
+
+.exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: clamp(0.85rem, 1.4vw, 1.25rem);
+    margin-top: 1rem;
+}
+
+.exchange-card {
+    min-height: 8.75rem;
+    border: 1px solid rgb(47 33 27 / 10%);
+    border-radius: 1.35rem;
+    background: var(--cream-light);
+    padding: 1.15rem 1.25rem;
+    box-shadow: 0 12px 35px rgb(61 40 29 / 7%);
+}
+
+.exchange-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.exchange-card h3 {
+    margin: 0;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.exchange-code {
+    display: inline-block;
+    margin-top: 0.3rem;
+    color: #8b7569;
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.exchange-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 999px;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.exchange-change-positive {
+    color: #3d6a64;
+}
+
+.exchange-change-negative {
+    color: #9b4934;
+}
+
+.exchange-change.exchange-change-positive {
+    background: rgb(70 115 109 / 10%);
+}
+
+.exchange-change.exchange-change-negative {
+    background: rgb(166 74 51 / 9%);
+}
+
+.exchange-change-neutral {
+    color: #8b7569;
+}
+
+.exchange-card-rate {
+    margin: 0.8rem 0 0;
+    color: var(--brown);
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(2rem, 2.6vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.exchange-updated {
+    margin: 0.7rem 0 0;
+    color: #887369;
+    font-size: 0.7rem;
+}
+
+.exchange-history {
+    margin-top: clamp(1.25rem, 2.6vh, 1.75rem);
+}
+
+    .exchange-history .animal-table thead th {
+        width: auto;
+    }
+
+    .exchange-history .animal-table tbody td {
+        padding-block: 0.65rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+.exchange-change-text {
+    font-weight: 800;
+}
+
+@media (min-width: 1024px) and (max-width: 1199.98px) {
+    .exchange-page {
+        padding-block: 1.5rem;
+    }
+}
