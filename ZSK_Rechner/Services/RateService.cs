@@ -5,9 +5,9 @@ namespace ZSK_Rechner.Services
 {
     public class RateService
     {
-        public List<RateHistoryViewModel> GerRates(List<ExchangeRate> rates)
+        public List<RateHistoryViewModel> GetRates(List<ExchangeRate> rates)
         {
-            decimal? PreviousRate = null;
+            decimal? previousRate = null;
             List<RateHistoryViewModel> rateHistory = new();
             foreach (var rate in rates)
             {
@@ -15,12 +15,12 @@ namespace ZSK_Rechner.Services
                 {
                     Rate = rate.Rate,
                     ValidFrom = rate.ValidFrom,
-                    PreviousRate = PreviousRate,
-                    ChangeRate = PreviousRate.HasValue ? rate.Rate - PreviousRate.Value : null
+                    PreviousRate = previousRate,
+                    ChangeRate = previousRate.HasValue ? (rate.Rate - previousRate.Value) / previousRate.Value * 100 : 0
                 });
-                PreviousRate = rate.Rate;
+                previousRate = rate.Rate;
             }
-            return rateHistory;
+            return rateHistory.OrderByDescending(r => r.ValidFrom).ToList();
         }
     }
 }

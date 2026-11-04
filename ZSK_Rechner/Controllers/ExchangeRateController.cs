@@ -24,10 +24,10 @@ namespace ZSK_Rechner.Controllers
             {
                 rates = _context.ExchangeRates
                     .Where(e => e.AnimalId == animal.Id)
-                    .OrderByDescending(e=>e.ValidFrom)
+                    .OrderBy(e=>e.ValidFrom)
                     .ToList();
 
-                List<RateHistoryViewModel> rateHistory = rateService.GerRates(rates);
+                List<RateHistoryViewModel> rateHistory = rateService.GetRates(rates);
 
                 var rateViewModel = new RateViewModel
                 {
