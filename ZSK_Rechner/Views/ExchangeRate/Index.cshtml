@@ -49,14 +49,14 @@
 						<div class="exchange-card-top">
 							<div>
 								<h3>@animalRate.AnimalName</h3>
-								<span class="exchange-code">@animalRate.AnimalName.Substring(0, 3).ToUpper()</span>
+								<span class="exchange-code">@(animalRate.AnimalName.Length > 3 ? animalRate.AnimalName.Substring(0, 3).ToUpper() : animalRate.AnimalName.ToUpper())</span>
 							</div>
 							<span class="exchange-change @changeCssClass">
 								<span aria-hidden="true">@changeSymbol</span>
 								@(change is decimal percent ? $"{percent:+0.00;-0.00;0.00} %" : "—")
 							</span>
 						</div>
-						<p class="exchange-card-rate">@animalRate.RateHistory.FirstOrDefault()?.Rate €</p>
+						<p class="exchange-card-rate">@(animalRate.RateHistory.FirstOrDefault()?.Rate is not null ? animalRate.RateHistory.FirstOrDefault()?.Rate + " €" : "Kein Kurs vorhanden")</p>
 						<p class="exchange-updated">
 							Aktualisiert am
 							<time datetime="@animalRate.RateHistory.FirstOrDefault()?.ValidFrom">

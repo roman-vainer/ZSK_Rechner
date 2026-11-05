@@ -39,6 +39,7 @@ namespace ZSK_Rechner.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(AnimalViewModel model)
         {
             if (!ModelState.IsValid)
@@ -46,11 +47,20 @@ namespace ZSK_Rechner.Controllers
                 return View(model);
             }
 
+            if (model.Rate is not decimal rate)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Rate),
+                    "Bitte einen Wechselkurs eingeben.");
+
+                return View(model);
+            }
+
             Animal animal = new(model.AnimalName);
             ExchangeRate exchangeRate = new()
             {
                 Animal = animal,
-                Rate = model.Rate!.Value,
+                Rate = rate,
                 ValidFrom = DateTime.UtcNow
             };
 
@@ -84,6 +94,7 @@ namespace ZSK_Rechner.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(AnimalViewModel model)
         {
             if (!ModelState.IsValid)
@@ -121,6 +132,7 @@ namespace ZSK_Rechner.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             var animal = _context.Animals.Find(id);

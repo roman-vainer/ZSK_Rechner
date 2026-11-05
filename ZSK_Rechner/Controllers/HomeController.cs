@@ -19,14 +19,19 @@ namespace ZSK_Rechner.Controllers
             var animal = _context.Animals.FirstOrDefault();
             var model = new HomeViewModel
             {
-                Name = animal?.Name ?? string.Empty,
-                Rate = _context.ExchangeRates
-                    .Where(e=>e.AnimalId == animal.Id)
-                    .OrderByDescending(e=>e.ValidFrom)
-                    .ThenByDescending(e=>e.Id)
-                    .Select(e=>e.Rate)
-                    .FirstOrDefault()
+                Name = animal?.Name ?? string.Empty
             };
+
+                if (animal != null)
+            {
+                model.Rate = _context.ExchangeRates
+                    .Where(e => e.AnimalId == animal.Id)
+                    .OrderByDescending(e => e.ValidFrom)
+                    .ThenByDescending(e => e.Id)
+                    .Select(e => e.Rate)
+                    .FirstOrDefault();
+            }
+
             return View(model);
         }
 

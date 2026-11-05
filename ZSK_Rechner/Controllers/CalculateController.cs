@@ -27,9 +27,14 @@ public class CalculateController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Calculate(CalculateViewModel model)
     {
-        
+        if(!ModelState.IsValid)
+        {
+            model.Animals = _context.Animals.ToList();
+            return View("Index", model);
+        }
         var animals = _context.Animals.ToList();
         model.Animals = animals;
         model.AnimalName = animals.FirstOrDefault(a => a.Id == model.AnimalId)?.Name;

@@ -79,7 +79,8 @@
 
 						@if (Model.Result.HasValue)
 						{
-							string ticker = Model.Direction == ZSK_Rechner.Enums.ConvertionDirection.AnimalToEuro ? " €" : $" {Model.AnimalName.Substring(0, 3)}";
+							string shortName = Model.AnimalName.Length > 3 ? Model.AnimalName.Substring(0, 3) : Model.AnimalName;
+							string ticker = Model.Direction == ZSK_Rechner.Enums.ConvertionDirection.AnimalToEuro ? " €" : $" {shortName}";
 							<dl class="result-values">
 								<div>
 									<dt>Berechnetes Ergebnis</dt>

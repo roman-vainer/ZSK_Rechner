@@ -18,13 +18,15 @@ namespace ZSK_Rechner.Controllers
             List<RateViewModel> rateViewModels = new();
             var animals = _context.Animals.ToList();
             RateService rateService = new RateService();
+            List<ExchangeRate> allRates = _context.ExchangeRates.ToList();
             List<ExchangeRate> rates = new();
 
             foreach (var animal in animals)
             {
-                rates = _context.ExchangeRates
+                rates = allRates
                     .Where(e => e.AnimalId == animal.Id)
                     .OrderBy(e=>e.ValidFrom)
+                    .ThenBy(e=>e.Id)
                     .ToList();
 
                 List<RateHistoryViewModel> rateHistory = rateService.GetRates(rates);
