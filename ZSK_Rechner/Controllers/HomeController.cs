@@ -16,15 +16,16 @@ namespace ZSK_Rechner.Controllers
 
         public IActionResult Index()
         {
-            decimal cowRate = _context.ExchangeRates.Where(r => r.Animal.Name == "Kuh")
-                .OrderByDescending(r => r.ValidFrom)
-                .ThenByDescending(r => r.Id)
-                .Select(r => r.Rate)
-                .FirstOrDefault();
-
+            var animal = _context.Animals.FirstOrDefault();
             var model = new HomeViewModel
             {
-                CowRate = cowRate
+                Name = animal?.Name ?? string.Empty,
+                Rate = _context.ExchangeRates
+                    .Where(e=>e.AnimalId == animal.Id)
+                    .OrderByDescending(e=>e.ValidFrom)
+                    .ThenByDescending(e=>e.Id)
+                    .Select(e=>e.Rate)
+                    .FirstOrDefault()
             };
             return View(model);
         }

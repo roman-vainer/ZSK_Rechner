@@ -124,6 +124,17 @@
     font-weight: 800;
 }
 
+.exchange-history .table-responsive {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.exchange-history thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
 @media (min-width: 1024px) and (max-width: 1199.98px) {
     .exchange-page {
         padding-block: 1.5rem;

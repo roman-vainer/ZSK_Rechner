@@ -29,6 +29,7 @@ public class CalculateController : Controller
     [HttpPost]
     public IActionResult Calculate(CalculateViewModel model)
     {
+        
         var animals = _context.Animals.ToList();
         model.Animals = animals;
         model.AnimalName = animals.FirstOrDefault(a => a.Id == model.AnimalId)?.Name;

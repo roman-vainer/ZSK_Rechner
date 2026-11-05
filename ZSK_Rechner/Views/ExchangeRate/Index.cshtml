@@ -28,8 +28,22 @@
 
 				@foreach (var animalRate in Model)
 				{
-					string changeCssClass = animalRate.RateHistory.FirstOrDefault()?.ChangeRate >= 0 ? "exchange-change-positive" : "exchange-change-negative";
-					string changeSymbol = animalRate.RateHistory.FirstOrDefault()?.ChangeRate >= 0 ? "↗" : "↘";
+					var change = animalRate.RateHistory.FirstOrDefault()?.ChangeRate;
+
+					string changeCssClass = change switch
+					{
+						> 0 => "exchange-change-positive",
+						< 0 => "exchange-change-negative",
+						_ => "exchange-change-neutral"
+					};
+
+					string changeSymbol = change switch
+					{
+						> 0 => "↗",
+						< 0 => "↘",
+						0 => "→",
+						_ => "—"
+					};
 
 					<article class="exchange-card">
 						<div class="exchange-card-top">
@@ -39,7 +53,7 @@
 							</div>
 							<span class="exchange-change @changeCssClass">
 								<span aria-hidden="true">@changeSymbol</span>
-								@animalRate.RateHistory.FirstOrDefault()?.ChangeRate.ToString("F2") %
+								@(change is decimal percent ? $"{percent:+0.00;-0.00;0.00} %" : "—")
 							</span>
 						</div>
 						<p class="exchange-card-rate">@animalRate.RateHistory.FirstOrDefault()?.Rate €</p>
@@ -75,46 +89,55 @@
 							<th scope="col" class="text-end">Änderung</th>
 						</tr>
 					</thead>
+
 					<tbody>
-						@{
-							var rates = Model.
-						}
-						@foreach (var rate in Model)
+						@foreach (var row in Model
+							.SelectMany(a => a.RateHistory.Select(r => new
+							{
+								a.AnimalName,
+								History = r
+							}))
+							.OrderByDescending(x => x.History.ValidFrom))
 						{
+							string changeCssClass = row.History.ChangeRate switch
+							{
+								> 0 => "exchange-change-positive",
+								< 0 => "exchange-change-negative",
+								_ => "exchange-change-neutral"
+							};
+
 							<tr>
 								<td>
-									<time datetime="@animalRate.RateHistory.FirstOrDefault()?.ValidFrom">
-										@animalRate.RateHistory.FirstOrDefault()?.ValidFrom.ToString("dd.MM.yyyy")
+									<time datetime="@row.History.ValidFrom.ToString("yyyy-MM-dd")">
+										@row.History.ValidFrom.ToString("dd.MM.yyyy")
 									</time>
 								</td>
-								<td><strong>@animalRate.AnimalName</strong></td>
-								<td class="text-end">@animalRate.AnimalName €</td>
-								<td class="text-end">2.800,00 €</td>
-								<td class="text-end"><span class="exchange-change-text exchange-change-positive">+5,66 %</span></td>
+
+								<td>
+									<strong>@row.AnimalName</strong>
+								</td>
+
+								<td class="text-end">
+									@(row.History.PreviousRate.HasValue
+										? $"{row.History.PreviousRate.Value:N2} €"
+										: "—")
+								</td>
+
+								<td class="text-end">
+									@row.History.Rate.ToString("N2") €
+								</td>
+
+								<td class="text-end">
+									<span class="exchange-change-text @changeCssClass">
+										@(row.History.ChangeRate is decimal percent
+											? $"{percent:+0.00;-0.00;0.00} %"
+											: "—")
+									</span>
+								</td>
 							</tr>
 						}
-						<tr>
-							<td><time datetime="2026-11-02">02.11.2026</time></td>
-							<td><strong>Schaf</strong></td>
-							<td class="text-end">360,00 €</td>
-							<td class="text-end">350,00 €</td>
-							<td class="text-end"><span class="exchange-change-text exchange-change-negative">−2,78 %</span></td>
-						</tr>
-						<tr>
-							<td><time datetime="2026-10-30">30.10.2026</time></td>
-							<td><strong>Ziege</strong></td>
-							<td class="text-end">175,00 €</td>
-							<td class="text-end">180,00 €</td>
-							<td class="text-end"><span class="exchange-change-text exchange-change-positive">+2,86 %</span></td>
-						</tr>
-						<tr>
-							<td><time datetime="2026-10-28">28.10.2026</time></td>
-							<td><strong>Kuh</strong></td>
-							<td class="text-end">—</td>
-							<td class="text-end">2.650,00 €</td>
-							<td class="text-end"><span class="exchange-change-text exchange-change-neutral">—</span></td>
-						</tr>
 					</tbody>
+
 				</table>
 			</div>
 		</section>

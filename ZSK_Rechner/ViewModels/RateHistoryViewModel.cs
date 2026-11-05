@@ -5,6 +5,6 @@
         public DateTime ValidFrom { get; set; }
         public decimal Rate { get; set; }
         public decimal? PreviousRate { get; set; }
-        public decimal ChangeRate { get; set; }
+        public decimal? ChangeRate { get; set; }
     }
 }

@@ -52,7 +52,7 @@
 								<td>
 									<span class="animal-avatar @avatarClass">@animal.AnimalName[0]</span><strong>@animal.AnimalName</strong>
 								</td>
-								<td class="animal-rate">@animal.Rate</td>
+								<td class="animal-rate">@(animal.Rate.HasValue? $"{animal.Rate!.Value:N2} €" : "-")</td>
 
 								<td>
 									<div class="d-flex justify-content-end gap-2">

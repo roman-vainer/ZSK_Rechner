@@ -24,7 +24,7 @@ namespace ZSK_Rechner.Controllers
                     .Where(e => e.AnimalId == a.Id)
                     .OrderByDescending(e => e.ValidFrom)
                     .ThenByDescending(e => e.Id)
-                    .Select(e => e.Rate)
+                    .Select(e => (decimal?)e.Rate)
                     .FirstOrDefault()
                 }).ToList();
 
@@ -73,11 +73,12 @@ namespace ZSK_Rechner.Controllers
                 AnimalId = animal.Id,
                 AnimalName = animal.Name,
                 Rate = _context.ExchangeRates
-                .Where(e => e.AnimalId == animal.Id)
-                .OrderByDescending(e => e.ValidFrom)
-                .ThenByDescending(e => e.Id)
-                .Select(e => e.Rate)
-                .FirstOrDefault()
+
+                    .Where(e => e.AnimalId == animal.Id)
+                    .OrderByDescending(e => e.ValidFrom)
+                    .ThenByDescending(e => e.Id)
+                    .Select(e => (decimal?)e.Rate)
+                    .FirstOrDefault()
             };
             return View(model);
         }
@@ -99,7 +100,14 @@ namespace ZSK_Rechner.Controllers
                 animal.Name = model.AnimalName;
             }
 
-            if (model.Rate != null)
+            var currentRate = _context.ExchangeRates
+                .Where(e => e.AnimalId == animal.Id)
+                .OrderByDescending(e => e.ValidFrom)
+                .ThenByDescending(e => e.Id)
+                .Select(e => (decimal?)e.Rate)
+                .FirstOrDefault();
+
+            if (model.Rate is decimal newRate && newRate != currentRate)
             {
                 _context.ExchangeRates.Add(new ExchangeRate
                 {
